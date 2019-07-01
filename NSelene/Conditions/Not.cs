@@ -1,26 +1,26 @@
-using NSelene;
-using NSelene.Conditions;
-
-namespace Conditions
+namespace NSelene
 {
-    public class Not : DescribedCondition<SeleneElement>
+    namespace Conditions
     {
-        private DescribedCondition<SeleneElement> _condition;
-
-
-        public Not(DescribedCondition<SeleneElement> condition)
+        public class Not : DescribedCondition<SeleneElement>
         {
-            _condition = condition;
-        }
+            private DescribedCondition<SeleneElement> _condition;
 
-        public override bool Apply(SeleneElement element)
-        {
-            return !_condition.Apply(element);
-        }
 
-        public override string Explain()
-        {
-            return "Returns opposite to " + _condition;
+            public Not(DescribedCondition<SeleneElement> condition)
+            {
+                _condition = condition;
+            }
+
+            public override bool Apply(SeleneElement element)
+            {
+                return !_condition.Apply(element);
+            }
+
+            public override string Explain()
+            {
+                return "Returns opposite to " + _condition;
+            }
         }
     }
 }
