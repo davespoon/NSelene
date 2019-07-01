@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Text.RegularExpressions;
+using NSelene.Conditions;
 
 namespace NSelene
 {
@@ -6,7 +7,6 @@ namespace NSelene
     {
         public class Text : DescribedCondition<SeleneElement>
         {
-
             protected string expected;
             protected string actual;
 
@@ -35,8 +35,9 @@ namespace NSelene
 
         public class ExactText : Text
         {
-
-            public ExactText(string expected) : base(expected) {}
+            public ExactText(string expected) : base(expected)
+            {
+            }
 
             public override bool Apply(SeleneElement entity)
             {
@@ -50,19 +51,47 @@ namespace NSelene
             }
         }
 
+        public class TextIgnoringCase : Text
+        {
+            public TextIgnoringCase(string expected) : base(expected)
+            {
+            }
+
+            public override bool Apply(SeleneElement entity)
+            {
+                this.actual = entity.ActualWebElement.Text;
+                return Regex.IsMatch(actual, this.expected, RegexOptions.IgnoreCase);
+            }
+            public override string DescribeExpected()
+            {
+                return "is " + this.expected +  " ignoring case";
+            }
+        }
     }
 
     public static partial class Have
     {
-        public static Conditions.Condition<SeleneElement> Text(string expected)
+        public static Condition<SeleneElement> Text(string expected)
         {
-            return new Conditions.Text(expected);
+            return new Text(expected);
         }
 
-        public static Conditions.Condition<SeleneElement> ExactText(string expected)
+        public static Condition<SeleneElement> ExactText(string expected)
         {
-            return new Conditions.ExactText(expected);
+            return new ExactText(expected);
+        }
+
+        public static Condition<SeleneElement> TextIgnoringCase(string expected)
+        {
+            return new TextIgnoringCase(expected);
         }
     }
 
+    public static partial class HaveNot
+    {
+        public static Condition<SeleneElement> Text(string exepected)
+        {
+            return new Not(new Text(exepected));
+        }
+    }
 }
