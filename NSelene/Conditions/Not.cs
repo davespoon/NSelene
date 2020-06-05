@@ -4,22 +4,22 @@ namespace NSelene
     {
         public class Not : DescribedCondition<SeleneElement>
         {
-            private DescribedCondition<SeleneElement> _condition;
+            private DescribedCondition<SeleneElement> condition;
 
 
-            public Not(DescribedCondition<SeleneElement> condition)
+            public Not(DescribedCondition<SeleneElement> originalCondition)
             {
-                _condition = condition;
+                condition = originalCondition;
             }
 
             public override bool Apply(SeleneElement element)
             {
-                return !_condition.Apply(element);
+                return !condition.Apply(element);
             }
 
             public override string Explain()
             {
-                return "Returns opposite to " + _condition;
+                return "Returns opposite to " + condition;
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using NSelene;
+using NSelene.Conditions;
+using NUnit.Framework;
 using static NSelene.Selene;
 using NSeleneExamples.TodoMVC.WithPages.Pages;
 
@@ -16,13 +18,16 @@ namespace NSeleneExamples.TodoMVC.WithPages
             Tasks.Add("a", "b", "c");
             Tasks.ShouldBe("a", "b", "c");
 
-            Tasks.Toggle("b"); 
+            Tasks.Toggle("b");
 
             Tasks.FilterActive();
             Tasks.ShouldBe("a", "c");
 
             Tasks.FilterCompleted();
             Tasks.ShouldBe("b");
+
+
+            S(".selected").Should(HaveNot.Text("Completed"));
         }
     }
 }

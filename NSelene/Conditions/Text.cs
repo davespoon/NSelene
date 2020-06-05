@@ -64,7 +64,7 @@ namespace NSelene
             }
             public override string DescribeExpected()
             {
-                return "is " + this.expected +  " ignoring case";
+                return "contains " + this.expected +  " ignoring case";
             }
         }
     }

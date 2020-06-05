@@ -2,6 +2,7 @@
 using static NSelene.Selene;
 using OpenQA.Selenium.Chrome;
 using NSelene;
+using OpenQA.Selenium.Firefox;
 
 namespace NSeleneExamples
 {
@@ -11,7 +12,7 @@ namespace NSeleneExamples
         [SetUp]
         public void SetupTest()
         {
-            SetWebDriver(new ChromeDriver());
+            SetWebDriver(new FirefoxDriver());
             Configuration.Timeout = 6;
         }
 
